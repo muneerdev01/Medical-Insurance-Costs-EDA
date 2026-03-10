@@ -196,7 +196,7 @@ with col1:
         showlegend=False,
         height=400
     )
-    st.plotly_chart(fig_charges, use_container_width=True)
+    st.plotly_chart(fig_charges, width='stretch')
 
 with col2:
     # Age Distribution
@@ -213,7 +213,7 @@ with col2:
         showlegend=False,
         height=400
     )
-    st.plotly_chart(fig_age, use_container_width=True)
+    st.plotly_chart(fig_age, width='stretch')
 
 col1, col2 = st.columns(2)
 
@@ -232,7 +232,7 @@ with col1:
         showlegend=False,
         height=400
     )
-    st.plotly_chart(fig_bmi, use_container_width=True)
+    st.plotly_chart(fig_bmi, width='stretch')
 
 with col2:
     # Categorical Variables
@@ -264,7 +264,7 @@ with col2:
     )
     
     fig_cat.update_layout(height=400, showlegend=True)
-    st.plotly_chart(fig_cat, use_container_width=True)
+    st.plotly_chart(fig_cat, width='stretch')
 
 st.markdown("---")
 
@@ -290,7 +290,7 @@ with col1:
         trendline_color_override='#1f77b4'
     )
     fig_age_charges.update_layout(height=400, hovermode='closest')
-    st.plotly_chart(fig_age_charges, use_container_width=True)
+    st.plotly_chart(fig_age_charges, width='stretch')
 
 with col2:
     # BMI vs Charges
@@ -307,7 +307,7 @@ with col2:
         trendline_color_override='#1f77b4'
     )
     fig_bmi_charges.update_layout(height=400, hovermode='closest')
-    st.plotly_chart(fig_bmi_charges, use_container_width=True)
+    st.plotly_chart(fig_bmi_charges, width='stretch')
 
 col1, col2 = st.columns(2)
 
@@ -323,7 +323,7 @@ with col1:
         color_discrete_map={'yes': '#d62728', 'no': '#2ca02c'}
     )
     fig_children.update_layout(height=400)
-    st.plotly_chart(fig_children, use_container_width=True)
+    st.plotly_chart(fig_children, width='stretch')
 
 with col2:
     # Smoker Status Impact
@@ -337,7 +337,7 @@ with col2:
         color_discrete_map={'yes': '#d62728', 'no': '#2ca02c'}
     )
     fig_smoker.update_layout(height=400, showlegend=False)
-    st.plotly_chart(fig_smoker, use_container_width=True)
+    st.plotly_chart(fig_smoker, width='stretch')
 
 st.markdown("---")
 
@@ -363,7 +363,7 @@ with col1:
     )
     fig_sex.update_traces(texttemplate='$%{text:,.0f}', textposition='outside')
     fig_sex.update_layout(height=400, showlegend=False)
-    st.plotly_chart(fig_sex, use_container_width=True)
+    st.plotly_chart(fig_sex, width='stretch')
 
 with col2:
     # Charges by Region
@@ -381,7 +381,7 @@ with col2:
     )
     fig_region.update_traces(texttemplate='$%{text:,.0f}', textposition='outside')
     fig_region.update_layout(height=400, showlegend=False)
-    st.plotly_chart(fig_region, use_container_width=True)
+    st.plotly_chart(fig_region, width='stretch')
 
 col1, col2 = st.columns(2)
 
@@ -400,7 +400,7 @@ with col1:
     )
     fig_age_group.update_traces(texttemplate='$%{text:,.0f}', textposition='outside')
     fig_age_group.update_layout(height=400, showlegend=False)
-    st.plotly_chart(fig_age_group, use_container_width=True)
+    st.plotly_chart(fig_age_group, width='stretch')
 
 with col2:
     # Charges by BMI Category
@@ -417,7 +417,7 @@ with col2:
     )
     fig_bmi_cat.update_traces(texttemplate='$%{text:,.0f}', textposition='outside')
     fig_bmi_cat.update_layout(height=400, showlegend=False)
-    st.plotly_chart(fig_bmi_cat, use_container_width=True)
+    st.plotly_chart(fig_bmi_cat, width='stretch')
 
 st.markdown("---")
 
@@ -448,7 +448,7 @@ with col1:
         height=450,
         width=500
     )
-    st.plotly_chart(fig_corr, use_container_width=True)
+    st.plotly_chart(fig_corr, width='stretch')
 
 with col2:
     # Correlations with charges
@@ -466,7 +466,7 @@ with col2:
     )
     fig_charges_corr.update_traces(textposition='outside')
     fig_charges_corr.update_layout(height=450, showlegend=False)
-    st.plotly_chart(fig_charges_corr, use_container_width=True)
+    st.plotly_chart(fig_charges_corr, width='stretch')
 
 st.markdown("---")
 
@@ -480,7 +480,7 @@ tab1, tab2, tab3 = st.tabs(["Descriptive Stats", "Group Comparisons", "Data Qual
 with tab1:
     st.subheader("Descriptive Statistics")
     summary_stats = filtered_df.describe().round(2)
-    st.dataframe(summary_stats.T, use_container_width=True)
+    st.dataframe(summary_stats.T, width='stretch')
 
 with tab2:
     st.subheader("Group Comparisons")
@@ -548,11 +548,11 @@ with col1:
     )
 
 if view_type == "First 10 Records":
-    st.dataframe(filtered_df.head(10), use_container_width=True)
+    st.dataframe(filtered_df.head(10), width='stretch')
 elif view_type == "Sample 20 Records":
-    st.dataframe(filtered_df.sample(min(20, len(filtered_df))), use_container_width=True)
+    st.dataframe(filtered_df.sample(min(20, len(filtered_df))), width='stretch')
 else:
-    st.dataframe(filtered_df, use_container_width=True)
+    st.dataframe(filtered_df, width='stretch')
 
 # ============================================================================
 # ROW 7: INSIGHTS & RECOMMENDATIONS
