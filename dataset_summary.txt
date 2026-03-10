@@ -1,0 +1,78 @@
+MEDICAL INSURANCE DATASET - ANALYSIS SUMMARY
+================================================================================
+
+Total Records                 : 1338
+Date Generated                : 2026-03-09 23:36:46
+Average Charges               : $13270.42
+Median Charges                : $9382.03
+Min Charges                   : $1121.87
+Max Charges                   : $63770.43
+Std Dev Charges               : $12110.01
+Smoker %                      : 20.5%
+Average Age                   : 39.2 years
+Average BMI                   : 30.66
+
+
+================================================================================
+KEY FINDINGS & BUSINESS INSIGHTS
+================================================================================
+
+1. SMOKING STATUS - CRITICAL DRIVER
+   • Smokers have ~3x higher average charges than non-smokers
+   • Smoking alone appears to be the strongest predictor of insurance costs
+   • RECOMMENDATION: Implement smoking cessation programs & incentives
+
+2. AGE RELATIONSHIP
+   • Strong positive correlation between age and charges (r=0.30)
+   • Age groups: Young adults (18-25) have lowest charges
+   • Charges significantly increase from age 40 onwards
+   • RECOMMENDATION: Premium pricing should reflect age brackets
+
+3. BMI & OBESITY IMPACT
+   • Positive correlation between BMI and charges (r=0.20)
+   • Higher BMI individuals face elevated costs
+   • RECOMMENDATION: Wellness programs targeting weight management
+
+4. FAMILY SIZE
+   • Minimal impact on charges overall
+   • Number of children shows weak relationship with insurance costs
+   • Some variation by combination with other factors
+
+5. GENDER DIFFERENCES
+   • Minimal gender-based charge differences
+   • Risk profiles appear similar between male/female
+   • RECOMMENDATION: Gender-neutral pricing justified
+
+6. REGIONAL VARIATIONS
+   • Slight regional differences in average charges
+   • No strong evidence of regional risk clustering
+   • Regional factors may reflect demographic differences
+
+7. DATA QUALITY
+   • No missing values or duplicates detected
+   • Dataset is clean and well-structured
+   • Outliers present but plausible (legitimate high-cost cases)
+
+================================================================================
+ACTIONABLE RECOMMENDATIONS
+================================================================================
+
+✓ PRICING STRATEGY:
+  • Risk-tier smokers significantly higher premium
+  • Age-adjusted pricing with progressive increases post-40
+  • BMI-adjusted premiums for overweight individuals
+
+✓ RISK MANAGEMENT:
+  • Target smoking cessation programs (highest impact)
+  • Preventive health screenings for 40+ age group
+  • Wellness initiatives for weight management
+
+✓ CUSTOMER SEGMENTATION:
+  • Profile A: Young, healthy, non-smoker → Lower premium
+  • Profile B: Middle-aged, smoker → High premium
+  • Profile C: Older demographic → Age-adjusted premium
+
+✓ FURTHER ANALYSIS NEEDED:
+  • Interaction effects (e.g., smoker + age + BMI)
+  • Predictive modeling for charge estimation
+  • Cost-benefit analysis of wellness programs
