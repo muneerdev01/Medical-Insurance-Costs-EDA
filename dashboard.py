@@ -48,7 +48,14 @@ st.markdown("""
 @st.cache_data
 def load_data():
     """Load and process the insurance dataset"""
-    df = pd.read_csv('insurance.csv')
+    try:
+        df = pd.read_csv('insurance.csv')
+    except FileNotFoundError:
+        st.error("Error: 'insurance.csv' file not found in the current directory.")
+        st.stop()
+    except Exception as e:
+        st.error(f"Error loading data: {str(e)}")
+        st.stop()
     
     # Data type conversion
     df['sex'] = df['sex'].astype('category')
@@ -56,7 +63,7 @@ def load_data():
     df['region'] = df['region'].astype('category')
     
     # Create age groups
-    df['age_group'] = pd.cut(df['age'], bins=[0, 25, 35, 50, 65], 
+    df['age_group'] = pd.cut(df['age'], bins=[0, 25, 35, 50, 100], 
                              labels=['18-25', '26-35', '36-50', '50+'])
     
     # Create BMI categories
@@ -116,7 +123,11 @@ filtered_df = df[
 ]
 
 st.sidebar.markdown("---")
-st.sidebar.info(f"📈 Records Shown: {len(filtered_df):,} / {len(df):,}")
+if len(filtered_df) == 0:
+    st.sidebar.warning("⚠️ No records match the selected filters. Please adjust your selections.")
+    st.sidebar.info(f"📈 Records Shown: 0 / {len(df):,}")
+else:
+    st.sidebar.info(f"📈 Records Shown: {len(filtered_df):,} / {len(df):,}")
 
 # ============================================================================
 # MAIN DASHBOARD
@@ -127,6 +138,11 @@ st.markdown("<h1 style='text-align: center; color: #1f77b4;'>💰 Medical Insura
             unsafe_allow_html=True)
 st.markdown("<p style='text-align: center; color: #666;'>Comprehensive dashboard for insurance cost analysis and insights</p>", 
             unsafe_allow_html=True)
+
+# Check if filtered data is empty
+if len(filtered_df) == 0:
+    st.warning("No data matches the selected filters. Please adjust your filter selections to view the dashboard.")
+    st.stop()
 
 # ============================================================================
 # KPI SECTION
@@ -158,19 +174,25 @@ with col3:
     )
 
 with col4:
-    smoker_pct = (filtered_df['smoker'] == 'yes').sum() / len(filtered_df) * 100
-    st.metric(
-        label="Smoker %",
-        value=f"{smoker_pct:.1f}%"
-    )
+    if len(filtered_df) > 0:
+        smoker_pct = (filtered_df['smoker'] == 'yes').sum() / len(filtered_df) * 100
+        st.metric(
+            label="Smoker %",
+            value=f"{smoker_pct:.1f}%"
+        )
+    else:
+        st.metric(label="Smoker %", value="N/A")
 
 with col5:
-    avg_age = filtered_df['age'].mean()
-    st.metric(
-        label="Avg Age",
-        value=f"{avg_age:.1f}",
-        delta=f"{avg_age - df['age'].mean():.1f}" if len(filtered_df) != len(df) else None
-    )
+    if len(filtered_df) > 0:
+        avg_age = filtered_df['age'].mean()
+        st.metric(
+            label="Avg Age",
+            value=f"{avg_age:.1f}",
+            delta=f"{avg_age - df['age'].mean():.1f}" if len(filtered_df) != len(df) else None
+        )
+    else:
+        st.metric(label="Avg Age", value="N/A")
 
 st.markdown("---")
 
@@ -494,25 +516,38 @@ with tab2:
     with col1:
         st.write("**Smokers**")
         st.metric("Count", f"{len(smoker_data)}")
-        st.metric("Average", f"${smoker_data.mean():,.0f}")
-        st.metric("Median", f"${smoker_data.median():,.0f}")
+        if len(smoker_data) > 0:
+            st.metric("Average", f"${smoker_data.mean():,.0f}")
+            st.metric("Median", f"${smoker_data.median():,.0f}")
+        else:
+            st.metric("Average", "N/A")
+            st.metric("Median", "N/A")
     
     with col2:
         st.write("**Non-Smokers**")
         st.metric("Count", f"{len(non_smoker_data)}")
-        st.metric("Average", f"${non_smoker_data.mean():,.0f}")
-        st.metric("Median", f"${non_smoker_data.median():,.0f}")
+        if len(non_smoker_data) > 0:
+            st.metric("Average", f"${non_smoker_data.mean():,.0f}")
+            st.metric("Median", f"${non_smoker_data.median():,.0f}")
+        else:
+            st.metric("Average", "N/A")
+            st.metric("Median", "N/A")
     
     with col3:
         st.write("**Difference**")
-        avg_diff = smoker_data.mean() - non_smoker_data.mean()
-        pct_diff = (avg_diff / non_smoker_data.mean()) * 100
-        st.metric("Avg Difference", f"${avg_diff:,.0f}")
-        st.metric("% Increase", f"{pct_diff:.1f}%")
-        
-        # T-test
-        t_stat, p_value = stats.ttest_ind(smoker_data, non_smoker_data)
-        st.metric("P-Value", f"{p_value:.2e}")
+        if len(smoker_data) > 0 and len(non_smoker_data) > 0:
+            avg_diff = smoker_data.mean() - non_smoker_data.mean()
+            pct_diff = (avg_diff / non_smoker_data.mean()) * 100
+            st.metric("Avg Difference", f"${avg_diff:,.0f}")
+            st.metric("% Increase", f"{pct_diff:.1f}%")
+            
+            # T-test
+            t_stat, p_value = stats.ttest_ind(smoker_data, non_smoker_data)
+            st.metric("P-Value", f"{p_value:.2e}")
+        else:
+            st.metric("Avg Difference", "N/A")
+            st.metric("% Increase", "N/A")
+            st.metric("P-Value", "N/A")
 
 with tab3:
     col1, col2, col3 = st.columns(3)
